@@ -30,5 +30,6 @@ public class DouShiApplication extends Application implements ApplicationConstan
         SpotManager.getInstance(this).loadSpotAds();
         SpotManager.getInstance(this).setSpotOrientation(SpotManager.ORIENTATION_PORTRAIT);
         Vitamio.isInitialized(this);
+
     }
 }
