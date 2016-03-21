@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.base.BaseActivity;
+import com.itjh.doushi.UI.fragment.HotFragment;
 import com.itjh.doushi.UI.fragment.TabFragment;
 
 import net.youmi.android.spot.SpotManager;
@@ -92,7 +93,7 @@ public class MainActivity extends BaseActivity
         recommendedBundle.putString("videoType", "0");
         recommendedFragment.setArguments(recommendedBundle);
 
-        TabFragment highQualityFragment = new TabFragment();
+        HotFragment highQualityFragment = new HotFragment();
         Bundle highQualityBundle = new Bundle();
         highQualityBundle.putString("videoType", "1");
         highQualityFragment.setArguments(highQualityBundle);
