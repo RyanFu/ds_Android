@@ -14,17 +14,24 @@ public class VideoEntity {
     public String type;
     public String pushTime;
     public String isCollectStatus;
+    public boolean isEmpty;
+
+    public VideoEntity() {
+    }
+
+    public VideoEntity(String title,String pic, String pushTime, boolean isEmpty) {
+        this.title = title;
+        this.pic = pic;
+        this.pushTime = pushTime;
+        this.isEmpty = isEmpty;
+    }
 
     @Override
     public String toString() {
         return "VideoEntity{" +
                 "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", videoUrl='" + videoUrl + '\'' +
-                ", pic='" + pic + '\'' +
-                ", type='" + type + '\'' +
                 ", pushTime='" + pushTime + '\'' +
-                ", isCollectStatus='" + isCollectStatus + '\'' +
+                ", isEmpty=" + isEmpty +
                 '}';
     }
 }

@@ -17,7 +17,6 @@ import java.util.List;
  */
 public abstract class BaseQuickAdapter<T, H extends BaseAdapterHelper> extends RecyclerView.Adapter<BaseAdapterHelper> implements View.OnClickListener {
     protected static final String TAG = BaseQuickAdapter.class.getSimpleName();
-
     /**
      * 上下文
      */

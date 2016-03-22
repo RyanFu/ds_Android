@@ -2,13 +2,17 @@ package com.itjh.doushi.adapter;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.itjh.doushi.R;
+import com.itjh.doushi.Utils.ScreenUtils;
 import com.itjh.doushi.adapter.base.BaseAdapter;
 import com.itjh.doushi.adapter.base.BaseAdapterHelper;
 import com.itjh.doushi.pojo.VideoEntity;
@@ -30,15 +34,36 @@ public class HotVideoAdapter extends BaseAdapter<VideoEntity, HotVideoAdapter.My
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.getTextView(R.id.tv_video_list_title).setText(getItem(position).title);
-        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) holder.getView(R.id.my_image_view);
-        simpleDraweeView.setAspectRatio(1f);
-        simpleDraweeView.setImageURI(Uri.parse(getItem(position).pic));
+
+        VideoEntity videoEntity1 = getItem(position);
+
+        if (!videoEntity1.isEmpty) {
+            holder.getTextView(R.id.tv_video_list_title).setText(videoEntity1.pushTime);
+            SimpleDraweeView simpleDraweeView2 = (SimpleDraweeView) holder.getView(R.id.my_image_view);
+            simpleDraweeView2.setAspectRatio(1f);
+            simpleDraweeView2.setImageURI(Uri.parse(videoEntity1.pic));
+        } else {
+            holder.getTextView(R.id.tv_video_list_title).setText("");
+            SimpleDraweeView simpleDraweeView2 = (SimpleDraweeView) holder.getView(R.id.my_image_view);
+            simpleDraweeView2.setAspectRatio(1f);
+            simpleDraweeView2.setImageURI(Uri.parse("res:///" + android.R.color.white));
+        }
+
+        if (position % 3 != 0 && getHeaderId(position - position % 3) != -1) {
+            LinearLayout linearLayout = (LinearLayout) holder.getView(R.id.ll_list_bg);
+            linearLayout.setPadding(0, ScreenUtils.dip2px(linearLayout.getContext(), 48), 0, 0);
+        } else {
+            LinearLayout linearLayout = (LinearLayout) holder.getView(R.id.ll_list_bg);
+            linearLayout.setPadding(0, 0, 0, 0);
+        }
     }
 
     @Override
     public long getHeaderId(int position) {
-            return getItem(position).pushTime.startsWith("2016")?Math.abs(getItem(position).pushTime.hashCode()):Math.abs(getItem(position).pushTime.hashCode());
+        Log.e("position", position + "");
+        if (position > 0)
+            return position % 3 == 0 && !TextUtils.equals(getItem(position).pushTime, getItem(position - 3).pushTime) ? Math.abs(getItem(position).pushTime.hashCode()) : -1;
+        else return Math.abs(getItem(position).pushTime.hashCode());
     }
 
     @Override
@@ -56,13 +81,13 @@ public class HotVideoAdapter extends BaseAdapter<VideoEntity, HotVideoAdapter.My
 
     class MyViewHolder extends BaseAdapterHelper {
 
-        SimpleDraweeView my_image_view;
-        TextView tv_video_list_title;
+        SimpleDraweeView my_image_view1;
+        TextView tv_video_list_title1;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            my_image_view = (SimpleDraweeView) itemView.findViewById(R.id.my_image_view);
-            tv_video_list_title = (TextView) itemView.findViewById(R.id.tv_video_list_title);
+            my_image_view1 = (SimpleDraweeView) itemView.findViewById(R.id.my_image_view1);
+            tv_video_list_title1 = (TextView) itemView.findViewById(R.id.tv_video_list_title1);
         }
     }
 
@@ -72,6 +97,4 @@ public class HotVideoAdapter extends BaseAdapter<VideoEntity, HotVideoAdapter.My
             super(itemView);
         }
     }
-
-
 }

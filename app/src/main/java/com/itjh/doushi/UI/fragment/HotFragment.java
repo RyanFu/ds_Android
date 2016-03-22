@@ -3,6 +3,7 @@ package com.itjh.doushi.UI.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.itjh.doushi.Net.VideoService;
@@ -17,6 +18,8 @@ import com.malinskiy.superrecyclerview.OnMoreListener;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.orhanobut.logger.Logger;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+
+import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,17 +49,17 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
 
     @Override
     public void init(View view) {
-        recyclerView.setOnMoreListener(this);
+//        recyclerView.setOnMoreListener(this);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
         Logger.e(videoType);
-        retrofit.create(VideoService.class).listRepos("0", "10", videoType, "0").subscribeOn(Schedulers.newThread())
+        retrofit.create(VideoService.class).listRepos("0", "20", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(videoListResponse -> {
             Logger.i(videoListResponse.toString());
-            mAdapter.appendToList(videoListResponse.content);
+            mAdapter.appendToList(arrangeData(videoListResponse.content));
         }, throwable -> {
             Logger.e(throwable.getMessage());
         });
@@ -87,7 +90,7 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
         retrofit.create(VideoService.class).listRepos(((VideoEntity) mAdapter.getItem(mAdapter.getItemCount() - 1)).id, "20", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(videoListResponse -> {
             Logger.i(videoListResponse.toString());
-            mAdapter.appendToList(videoListResponse.content);
+            mAdapter.appendToList(arrangeData(videoListResponse.content));
         }, throwable -> {
             Logger.e(throwable.getMessage());
         });
@@ -95,6 +98,43 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
 
     @Override
     public void onClick(View v) {
+
+    }
+
+    String timep;
+
+    private List<VideoEntity> arrangeData(List<VideoEntity> entities) {
+
+        for (int i = 0; i < entities.size(); i++) {
+            if (i < 5) {
+                entities.get(i).pushTime = "2016-03-21";
+            } else if (i > 4 && i < 8) {
+                entities.get(i).pushTime = "2016-03-20";
+            } else if (i > 7 && i < 14) {
+                entities.get(i).pushTime = "2016-03-19";
+            } else if (i > 13 && i < 18) {
+                entities.get(i).pushTime = "2016-03-18";
+            } else if (i > 17) {
+                entities.get(i).pushTime = "2016-03-17";
+            }
+        }
+        for (int i = 0; i < entities.size(); i++) {
+            VideoEntity now = entities.get(i);
+            VideoEntity next = null;
+            if (i + 1 < entities.size())
+                next = entities.get(i + 1);
+
+            if (now != null && next != null && now.pushTime.startsWith("2016") && next.pushTime.startsWith("2016") && !TextUtils.equals(now.pushTime, next.pushTime) && i % 3 != 2) {
+                if (i % 3 == 0) {
+                    entities.add(i + 1, new VideoEntity(now.title, now.pic, now.pushTime, true));
+                    entities.add(i + 2, new VideoEntity(now.title, now.pic, now.pushTime, true));
+                } else if (i % 3 == 1) {
+                    entities.add(i + 1, new VideoEntity(now.title, now.pic, now.pushTime, true));
+                }
+            }
+
+        }
+        return entities;
 
     }
 

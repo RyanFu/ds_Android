@@ -88,12 +88,12 @@ public class MainActivity extends BaseActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        TabFragment recommendedFragment = new TabFragment();
+        HotFragment recommendedFragment = new HotFragment();
         Bundle recommendedBundle = new Bundle();
         recommendedBundle.putString("videoType", "0");
         recommendedFragment.setArguments(recommendedBundle);
 
-        HotFragment highQualityFragment = new HotFragment();
+        TabFragment highQualityFragment = new TabFragment();
         Bundle highQualityBundle = new Bundle();
         highQualityBundle.putString("videoType", "1");
         highQualityFragment.setArguments(highQualityBundle);
