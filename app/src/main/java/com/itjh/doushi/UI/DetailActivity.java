@@ -2,11 +2,14 @@ package com.itjh.doushi.UI;
 
 import android.animation.Animator;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -18,7 +21,9 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -27,11 +32,11 @@ import com.bumptech.glide.request.target.Target;
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.base.BaseActivity;
 import com.itjh.doushi.UI.widget.SquareImageView;
+import com.itjh.doushi.UI.widget.SquareVideoView;
+import com.itjh.doushi.Utils.ScreenUtils;
 import com.itjh.doushi.pojo.VideoEntity;
 
 import butterknife.Bind;
-import io.vov.vitamio.widget.MediaController;
-import io.vov.vitamio.widget.VideoView;
 
 /**
  * User: Axl_Jacobs(Axl.Jacobs@gmail.com)
@@ -56,7 +61,7 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
     SquareImageView simpleDraweeView;
 
     @Bind(R.id.svv_detail_video_view)
-    VideoView squareVideoView;
+    SquareVideoView squareVideoView;
 
     @Bind(R.id.fab)
     FloatingActionButton floatingActionButton;
@@ -78,6 +83,12 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         ActivityCompat.startActivity(activity, intent, options.toBundle());
     }
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
+    }
 
     @Override
     public int layoutID() {
@@ -131,7 +142,6 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
             squareVideoView.setVisibility(View.VISIBLE);
             squareVideoView.setVideoURI(Uri.parse(getIntent().getStringExtra(EXTRA_VIDEO_URL)));
         }, 1500);
-
         squareVideoView.setMediaController(new MediaController(this));
         squareVideoView.setOnPreparedListener(mp -> {
             simpleDraweeView.setVisibility(View.GONE);
@@ -159,13 +169,17 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
             squareVideoView.start();
         });
 
+        squareVideoView.setOnErrorListener((mp, what, extra) -> {
+            Toast.makeText(DetailActivity.this, "视频无法播放", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+            return false;
+        });
+
         squareVideoView.setOnCompletionListener(mp -> {
             squareVideoView.setVisibility(View.GONE);
             simpleDraweeView.setVisibility(View.VISIBLE);
             floatingActionButton.setVisibility(View.VISIBLE);
         });
-
-//        floatingActionButton.setOnClickListener(this);
 
     }
 
@@ -195,6 +209,17 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 v.setVisibility(View.GONE);
 
                 break;
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            CollapsingToolbarLayout.LayoutParams layoutParams = (CollapsingToolbarLayout.LayoutParams) squareVideoView.getLayoutParams();
+            layoutParams.width = ScreenUtils.getScreenHeight(this);
+            layoutParams.height = ScreenUtils.getScreenWidth(this);
+            squareVideoView.setLayoutParams(layoutParams);
         }
     }
 }

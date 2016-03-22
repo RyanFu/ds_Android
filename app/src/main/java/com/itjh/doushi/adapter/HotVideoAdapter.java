@@ -49,7 +49,7 @@ public class HotVideoAdapter extends BaseAdapter<VideoEntity, HotVideoAdapter.My
             simpleDraweeView2.setImageURI(Uri.parse("res:///" + android.R.color.white));
         }
 
-        if (position % 3 != 0 && getHeaderId(position - position % 3) != -1) {
+        if (position % 2 != 0 && getHeaderId(position - position % 2) != -1) {
             LinearLayout linearLayout = (LinearLayout) holder.getView(R.id.ll_list_bg);
             linearLayout.setPadding(0, ScreenUtils.dip2px(linearLayout.getContext(), 48), 0, 0);
         } else {
@@ -61,8 +61,8 @@ public class HotVideoAdapter extends BaseAdapter<VideoEntity, HotVideoAdapter.My
     @Override
     public long getHeaderId(int position) {
         Log.e("position", position + "");
-        if (position > 0)
-            return position % 3 == 0 && !TextUtils.equals(getItem(position).pushTime, getItem(position - 3).pushTime) ? Math.abs(getItem(position).pushTime.hashCode()) : -1;
+        if (position > 0 && getItem(position).pushTime.startsWith("2016"))
+            return position % 2 == 0 && !TextUtils.equals(getItem(position).pushTime, getItem(position - 2).pushTime) ? Math.abs(getItem(position).pushTime.hashCode()) : -1;
         else return Math.abs(getItem(position).pushTime.hashCode());
     }
 

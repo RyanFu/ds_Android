@@ -6,7 +6,6 @@ import com.itjh.doushi.Net.Constant;
 import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
-import io.vov.vitamio.Vitamio;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -19,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
-  protected   Retrofit retrofit;
+    protected Retrofit retrofit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     public void before() {
-        Vitamio.isInitialized(getApplicationContext());
+
     }
 
     public void after() {

@@ -49,9 +49,9 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
 
     @Override
     public void init(View view) {
-//        recyclerView.setOnMoreListener(this);
+        recyclerView.setOnMoreListener(this);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
 
@@ -104,20 +104,6 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
     String timep;
 
     private List<VideoEntity> arrangeData(List<VideoEntity> entities) {
-
-        for (int i = 0; i < entities.size(); i++) {
-            if (i < 5) {
-                entities.get(i).pushTime = "2016-03-21";
-            } else if (i > 4 && i < 8) {
-                entities.get(i).pushTime = "2016-03-20";
-            } else if (i > 7 && i < 14) {
-                entities.get(i).pushTime = "2016-03-19";
-            } else if (i > 13 && i < 18) {
-                entities.get(i).pushTime = "2016-03-18";
-            } else if (i > 17) {
-                entities.get(i).pushTime = "2016-03-17";
-            }
-        }
         for (int i = 0; i < entities.size(); i++) {
             VideoEntity now = entities.get(i);
             VideoEntity next = null;

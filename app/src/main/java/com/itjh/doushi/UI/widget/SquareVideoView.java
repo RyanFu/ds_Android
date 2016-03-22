@@ -24,11 +24,11 @@ public class SquareVideoView extends VideoView {
         super(context, attrs, defStyleAttr);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        int width = getMeasuredWidth();
-        setMeasuredDimension(width, width);
-    }
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//
+//        int width = getMeasuredWidth();
+//        setMeasuredDimension(width, width);
+//    }
 }

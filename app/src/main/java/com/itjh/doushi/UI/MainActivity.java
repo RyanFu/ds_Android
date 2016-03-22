@@ -17,7 +17,7 @@ import android.view.MenuItem;
 
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.base.BaseActivity;
-import com.itjh.doushi.UI.fragment.HotFragment;
+import com.itjh.doushi.UI.fragment.RecommendedFragment;
 import com.itjh.doushi.UI.fragment.TabFragment;
 
 import net.youmi.android.spot.SpotManager;
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        HotFragment recommendedFragment = new HotFragment();
+        RecommendedFragment recommendedFragment = new RecommendedFragment();
         Bundle recommendedBundle = new Bundle();
         recommendedBundle.putString("videoType", "0");
         recommendedFragment.setArguments(recommendedBundle);

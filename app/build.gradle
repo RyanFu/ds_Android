@@ -62,5 +62,4 @@ dependencies {
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.4.5.1'
     compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.4.5.1'
     compile files('libs/YoumiSdk_v6.1.0_2016-02-26.jar')
-    compile project(path: ':vitamio')
 }

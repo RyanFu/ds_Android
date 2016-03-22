@@ -41,7 +41,8 @@
 
         <activity
             android:name=".UI.DetailActivity"
-            android:parentActivityName=".UI.MainActivity">
+            android:parentActivityName=".UI.MainActivity"
+            android:configChanges="orientation|screenSize">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".UI.MainActivity" />

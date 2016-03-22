@@ -9,7 +9,6 @@ import com.orhanobut.logger.Logger;
 import net.youmi.android.AdManager;
 import net.youmi.android.spot.SpotManager;
 
-import io.vov.vitamio.Vitamio;
 
 
 /**
@@ -29,7 +28,6 @@ public class DouShiApplication extends Application implements ApplicationConstan
         AdManager.getInstance(this).init(AD_APP_ID, AD_APP_SECRET, APP_DEBUG);
         SpotManager.getInstance(this).loadSpotAds();
         SpotManager.getInstance(this).setSpotOrientation(SpotManager.ORIENTATION_PORTRAIT);
-        Vitamio.isInitialized(this);
 
     }
 }
