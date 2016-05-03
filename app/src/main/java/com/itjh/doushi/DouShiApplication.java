@@ -3,12 +3,12 @@ package com.itjh.doushi;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.itjh.doushi.Net.RestClient;
 import com.itjh.doushi.Utils.ApplicationConstant;
 import com.orhanobut.logger.Logger;
 
 import net.youmi.android.AdManager;
 import net.youmi.android.spot.SpotManager;
-
 
 
 /**
@@ -18,7 +18,7 @@ import net.youmi.android.spot.SpotManager;
  * FIXME
  */
 public class DouShiApplication extends Application implements ApplicationConstant {
-
+    private static RestClient restClient;
 
     @Override
     public void onCreate() {
@@ -28,6 +28,10 @@ public class DouShiApplication extends Application implements ApplicationConstan
         AdManager.getInstance(this).init(AD_APP_ID, AD_APP_SECRET, APP_DEBUG);
         SpotManager.getInstance(this).loadSpotAds();
         SpotManager.getInstance(this).setSpotOrientation(SpotManager.ORIENTATION_PORTRAIT);
+        restClient = new RestClient();
+    }
 
+    public static RestClient getRestClient() {
+        return restClient;
     }
 }

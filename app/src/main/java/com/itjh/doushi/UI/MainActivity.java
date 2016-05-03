@@ -88,6 +88,7 @@ public class MainActivity extends BaseActivity
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+
         RecommendedFragment recommendedFragment = new RecommendedFragment();
         Bundle recommendedBundle = new Bundle();
         recommendedBundle.putString("videoType", "0");

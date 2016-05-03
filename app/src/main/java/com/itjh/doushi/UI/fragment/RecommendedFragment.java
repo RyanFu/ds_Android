@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.itjh.doushi.Net.VideoService;
+import com.itjh.doushi.DouShiApplication;
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.base.BaseFragment;
 import com.itjh.doushi.UI.widget.videolist.calculator.DefaultSingleItemCalculatorCallback;
@@ -60,7 +60,7 @@ public class RecommendedFragment extends BaseFragment implements OnMoreListener,
 
 
         Logger.e(videoType);
-        retrofit.create(VideoService.class).listRepos("0", "10", videoType, "0").subscribeOn(Schedulers.newThread())
+        DouShiApplication.getRestClient().getVideoService().listRepos("0", "10", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(videoListResponse -> Observable.from(videoListResponse.content)
                         .map(VideoListItem::new).toList())
@@ -98,7 +98,7 @@ public class RecommendedFragment extends BaseFragment implements OnMoreListener,
 
     @Override
     public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-        retrofit.create(VideoService.class).listRepos((mAdapter.getItem(mAdapter.getItemCount() - 1)).videoEntity.id, "20", videoType, "0").subscribeOn(Schedulers.newThread())
+        DouShiApplication.getRestClient().getVideoService().listRepos((mAdapter.getItem(mAdapter.getItemCount() - 1)).videoEntity.id, "20", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).flatMap(videoListResponse -> Observable.from(videoListResponse.content)
                 .map(VideoListItem::new).toList())
                 .subscribe(videoListResponse -> {

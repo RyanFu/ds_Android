@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.itjh.doushi.Net.VideoService;
+import com.itjh.doushi.DouShiApplication;
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.base.BaseActivity;
 import com.itjh.doushi.adapter.base.BaseAdapterHelper;
@@ -51,7 +51,7 @@ public class TestActivity extends BaseActivity {
         };
         recyclerView.setAdapter(mAdapter);
 
-        retrofit.create(VideoService.class).listRepos("0", "40", "0", "0").subscribeOn(Schedulers.newThread())
+        DouShiApplication.getRestClient().getVideoService().listRepos("0", "40", "0", "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(videoListResponse -> {
             Logger.i(videoListResponse.toString());
             mAdapter.appendToList(videoListResponse.content);

@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.itjh.doushi.Net.VideoService;
+import com.itjh.doushi.DouShiApplication;
 import com.itjh.doushi.R;
 import com.itjh.doushi.UI.DetailActivity;
 import com.itjh.doushi.UI.base.BaseActivity;
@@ -56,7 +56,7 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
 
 
         Logger.e(videoType);
-        retrofit.create(VideoService.class).listRepos("0", "20", videoType, "0").subscribeOn(Schedulers.newThread())
+        DouShiApplication.getRestClient().getVideoService().listRepos("0", "20", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(videoListResponse -> {
             Logger.i(videoListResponse.toString());
             mAdapter.appendToList(arrangeData(videoListResponse.content));
@@ -87,7 +87,7 @@ public class HotFragment extends BaseFragment implements OnMoreListener, BaseQui
 
     @Override
     public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
-        retrofit.create(VideoService.class).listRepos(((VideoEntity) mAdapter.getItem(mAdapter.getItemCount() - 1)).id, "20", videoType, "0").subscribeOn(Schedulers.newThread())
+        DouShiApplication.getRestClient().getVideoService().listRepos(((VideoEntity) mAdapter.getItem(mAdapter.getItemCount() - 1)).id, "20", videoType, "0").subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(videoListResponse -> {
             Logger.i(videoListResponse.toString());
             mAdapter.appendToList(arrangeData(videoListResponse.content));

@@ -9,12 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.itjh.doushi.Net.Constant;
-
 import butterknife.ButterKnife;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by win8 -1 on 2015/8/5.
@@ -22,7 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
     public Activity mActivity;
     public View fragmentView;
-    public Retrofit retrofit ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,11 +43,6 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     }
 
     protected void before() {
-        retrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(Constant.NET_SERVER_ADD)
-                .build();
     }
 
     protected void after(View view) {
